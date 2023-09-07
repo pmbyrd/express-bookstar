@@ -4,13 +4,14 @@ const ExpressError = require("../expressError");
 const jsonschema = require("jsonschema");
 const bookSchema = require("../schemas/bookSchema.json");
 const router = new express.Router();
+const request = require("supertest");
 
 /** GET / => {books: [book, ...]}  */
 
 router.get("/", async function (req, res, next) {
 	try {
 		const books = await Book.findAll(req.query);
-		return res.json({ books });
+		return res.status(200).json({ books });
 	} catch (err) {
 		return next(err);
 	}
@@ -21,7 +22,7 @@ router.get("/", async function (req, res, next) {
 router.get("/:id", async function (req, res, next) {
 	try {
 		const book = await Book.findOne(req.params.id);
-		return res.json({ book });
+		return res.status(200).json({ book });
 	} catch (err) {
 		return next(err);
 	}
