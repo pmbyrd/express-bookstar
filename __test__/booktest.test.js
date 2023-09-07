@@ -84,6 +84,19 @@ describe("Test book class", function () {
 		});
 	});
 
+    describe("DELETE /books/:id", function () {
+        test("Deletes a single a book", async function () {
+            let response = await request(app)
+                .delete(`/books/1234567890`);
+            expect(response.body).toEqual({ message: "Book deleted" });
+        });
+    });
+
+    afterEach(async function () {
+        await db.query("DELETE FROM books");
+    });
+
+
 	afterAll(async function () {
 		await db.end();
 	});
